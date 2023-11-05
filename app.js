@@ -2,7 +2,9 @@ const express = require('express'),
     app = express(),
     cors = require('cors'),
     db = require('./config/database'),
-    Users = require('./model/users');
+    Users = require('./model/users'),
+    errorHandler = require('./middleware/errorHandler')
+    fs = require('fs');
 
 require("dotenv").config();
 
@@ -24,10 +26,23 @@ app.listen(PORT, async () => {
     }
 })
 
+const folderPath = './resources/static/assets/uploads';
+
+  // Check if folder exists
+if (!fs.existsSync(folderPath)) {
+// Create folder if it doesn't exist
+    fs.mkdirSync(folderPath, {recursive: true});
+    console.log('Folder created successfully.');
+} else {
+    console.log('Folder already exists.');
+}
+
 app.use('/api/v1', require('./routes/userRoutes'));
 app.all('*', (req, res) => {
     res.status(400).send({
         "code": 400,
         "msg": "Bad request"
     });
-  });
+});
+
+app.use(errorHandler);
