@@ -28,7 +28,7 @@ app.listen(PORT, async () => {
 
 const folderPath = './resources/static/assets/uploads';
 
-  // Check if folder exists
+// Check if folder exists
 if (!fs.existsSync(folderPath)) {
 // Create folder if it doesn't exist
     fs.mkdirSync(folderPath, {recursive: true});

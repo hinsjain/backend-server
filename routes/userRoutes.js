@@ -12,7 +12,7 @@ router.get("/users", verifyToken, verifyRole, getAllUsers)
 
 router.get("/users/:userId", verifyToken, getUserById)
 
-router.put("/users/:userId", verifyToken, updateUserById)
+router.put("/users/:userId", uploadFile.single('image'), verifyToken, updateUserById)
 
 router.put("/users/deactivate/:userId", verifyToken, deactivateUserById)
 
