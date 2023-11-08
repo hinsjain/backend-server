@@ -9,12 +9,26 @@ const Users = require('../model/users'),
 //To create user
 const createUser = asyncHandler(async (req, res) => {
     const schema = Joi.object({
-        firstName: Joi.string().required(),
-        lastName: Joi.string().required(),
-        age: Joi.number().min(18).required(),
+        firstName: Joi.string().required().messages({
+            'string.empty': 'First Name is required',
+            'any.required': 'First Name is required'
+          }),
+        lastName: Joi.string().required().messages({
+            'string.empty': 'Last Name is required',
+            'any.required': 'Last Name is required'
+          }),
+        age: Joi.number().min(18).max(99).required().messages({
+            'number.base': 'Age must be a number',
+            'number.min': 'You must be at least 18 years old',
+            'number.max': 'You cannot be older than 99 years'
+          }),
         phoneNumber: Joi.string().length(10).pattern(/[6-9]{1}[0-9]{9}/).required(),
         password: Joi.string().required(),
-        email: Joi.string().email().required(),
+        email: Joi.string().email().required().messages({
+            'string.email': 'Invalid email format',
+            'string.empty': 'Email is required',
+            'any.required': 'Email is required'
+          }),
         role: Joi.number().max(2).min(1),
         image: Joi.string()
       });
@@ -73,7 +87,11 @@ const userlogin = asyncHandler( async(req, res) => {
  
     const schema = Joi.object({
         password: Joi.string().required(),
-        email: Joi.string().email().required(),
+        email: Joi.string().email().required().messages({
+            'string.email': 'Invalid email format',
+            'string.empty': 'Email is required',
+            'any.required': 'Email is required'
+          }),
     });
 
     const { error } = schema.validate(req.body);
@@ -155,12 +173,26 @@ const updateUserById = asyncHandler(async(req, res) =>{
     }
 
     const schema = Joi.object({
-        firstName: Joi.string().required(),
-        lastName: Joi.string().required(),
-        age: Joi.number().min(18).required(),
+        firstName: Joi.string().required().messages({
+            'string.empty': 'First Name is required',
+            'any.required': 'First Name is required'
+          }),
+        lastName: Joi.string().required().messages({
+            'string.empty': 'Last Name is required',
+            'any.required': 'Last Name is required'
+          }),
+        age: Joi.number().min(18).max(99).required().messages({
+            'number.base': 'Age must be a number',
+            'number.min': 'You must be at least 18 years old',
+            'number.max': 'You cannot be older than 99 years'
+          }),
         phoneNumber: Joi.string().length(10).pattern(/[6-9]{1}[0-9]{9}/).required(),
         password: Joi.string().required(),
-        email: Joi.string().email().required(),
+        email: Joi.string().email().required().messages({
+            'string.email': 'Invalid email format',
+            'string.empty': 'Email is required',
+            'any.required': 'Email is required'
+          }),
         role: Joi.number().max(2).min(1),
         image: Joi.string()
     });

@@ -38,6 +38,8 @@ if (!fs.existsSync(folderPath)) {
 }
 
 app.use('/api/v1', require('./routes/userRoutes'));
+
+app.use("/images", express.static('./'))
 app.all('*', (req, res) => {
     res.status(400).send({
         "code": 400,
